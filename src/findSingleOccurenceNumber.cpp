@@ -14,7 +14,22 @@ NOTES:
 There are better ways of solving the problem than a brute-force solution which is of O(n^2)
 complexity .
 */
+#include<stddef.h>
 
 int findSingleOccurenceNumber(int *A, int len) {
-	return -1;
+	int occuringonce=0, occuringtwice=0, occuringthrice,i;
+	if (A == NULL||len<4)
+	{
+		return -1;
+	}
+	for (i = 0; i < len; i++)
+	{
+		occuringtwice = occuringtwice | occuringonce&A[i];
+		occuringonce = occuringonce^A[i];
+		occuringthrice = ~(occuringonce&occuringtwice);
+		occuringonce = occuringonce&occuringthrice;
+		occuringtwice = occuringtwice&occuringthrice;
+	}
+	return occuringonce;
+	
 }
